@@ -25,7 +25,7 @@ export const requireRefreshToken = (req, res, next) => {
   try {
     console.log(req.cookies)
     const cookieToken = req.cookies.refreshToken
-    console.log(cookieToken)
+    console.log(`cookieToken - ${cookieToken}`)
     if (!cookieToken) throw new Error('Sesion expirada')
     const { uid } = jwt.verify(cookieToken, process.env.SECRET_JWT_REFRESH_KEY)
     req.uid = uid

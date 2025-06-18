@@ -12,13 +12,13 @@ export const getList = async (req, res) => {
 
 export const create = async (req, res) => {
   console.log('create')
-  const { nombre } = req.body
+  const { nombre, provincia } = req.body
 
   try {
     let bodega = await Bodega.findOne({ nombre })
     if (bodega) return res.status(403).json({ error: 'La bodega ya existe' })
 
-    bodega = new Bodega({ nombre })
+    bodega = new Bodega({ nombre, provincia })
     await bodega.save()
 
     return res.status(201).json({ id: bodega.id })

@@ -1,7 +1,7 @@
 import { Cepa } from '../models/Cepa.js'
 
 export const getList = async (req, res) => {
-  console.log('getList')
+  console.log('Cepa - getList')
   try {
     const cepas = await Cepa.find()
     return res.json({ cepas: cepas || [] })
@@ -12,7 +12,7 @@ export const getList = async (req, res) => {
 }
 
 export const create = async (req, res) => {
-  console.log('create')
+  console.log('Cepa - create')
   const { name, type } = req.body
 
   try {
@@ -30,7 +30,7 @@ export const create = async (req, res) => {
 }
 
 export const deleteCepa = async (req, res) => {
-  console.log('deleteCepa')
+  console.log('Cepa - deleteCepa')
   const cepaId = req.params.id
 
   try {
