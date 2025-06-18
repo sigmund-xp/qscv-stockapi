@@ -1,8 +1,8 @@
 import mongoose from 'mongoose'
 
 const bodegaSchema = new mongoose.Schema({
-  nombre: String,
-  provincia: String
+  name: { type: String, required: true },
+  province: { type: String, required: true }
 })
 
 export const Bodega = mongoose.model('Bodegas', bodegaSchema, 'Bodegas')

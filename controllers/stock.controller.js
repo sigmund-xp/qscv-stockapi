@@ -13,13 +13,13 @@ export const getList = async (req, res) => {
 
 export const create = async (req, res) => {
   console.log('create')
-  const { cantidad, etiqutaId } = req.body
+  const { quantity, etiquetaId } = req.body
 
   try {
-    let stock = await Stock.findOne({ etiqutaId })
-    if (stock) return res.status(403).json({ error: 'El stock ya existe agregue botellas a ese' })
+    let stock = await Stock.findOne({ etiquetaId })
+    if (stock) return res.status(403).json({ error: 'El stock de esa etiqueta ya existe' })
 
-    stock = new Stock({ cantidad, etiqutaId })
+    stock = new Stock({ quantity, etiquetaId })
     await stock.save()
 
     return res.status(201).json({ id: stock.id })
@@ -32,10 +32,10 @@ export const create = async (req, res) => {
 export const update = async (req, res) => {
   console.log('update')
   const stockId = req.params.id
-  const { cantidad } = req.body
+  const { quantity } = req.body
 
   try {
-    const stock = await Stock.findByIdAndUpdate(stockId, { cantidad })
+    const stock = await Stock.findByIdAndUpdate(stockId, { quantity })
     if (!stock) return res.status(404).json({ error: 'Error al actualizar el stock.' })
 
     return res.json({ stock })

@@ -13,13 +13,13 @@ export const getList = async (req, res) => {
 
 export const create = async (req, res) => {
   console.log('create')
-  const { nombre, añada, bodegaId, cepas: [cepaId] } = req.body
+  const { name, vintage, type, bodegaId, cepas: [cepaId] } = req.body
 
   try {
-    let etiqueta = await Etiqueta.findOne({ nombre, añada })
+    let etiqueta = await Etiqueta.findOne({ name, vintage, type })
     if (etiqueta) return res.status(403).json({ error: 'La etiqueta ya existe' })
 
-    etiqueta = new Etiqueta({ nombre, añada, bodegaId, cepas: [cepaId] })
+    etiqueta = new Etiqueta({ name, vintage, type, bodegaId, cepas: [cepaId] })
     await etiqueta.save()
 
     return res.status(201).json({ id: etiqueta.id })
@@ -32,10 +32,10 @@ export const create = async (req, res) => {
 export const update = async (req, res) => {
   console.log('update')
   const etiquetaId = req.params.id
-  const { nombre, añada, bodegaId, cepas: [cepaId] } = req.body
+  const { name, vintage, type, bodegaId, cepas: [cepaId] } = req.body
 
   try {
-    const etiqueta = await Etiqueta.findByIdAndUpdate(etiquetaId, { nombre, añada, bodegaId, cepas: [cepaId] })
+    const etiqueta = await Etiqueta.findByIdAndUpdate(etiquetaId, { name, vintage, type, bodegaId, cepas: [cepaId] })
     if (!etiqueta) return res.status(404).json({ error: 'Error al actualizar la etiqueta.' })
 
     return res.json({ etiqueta })
