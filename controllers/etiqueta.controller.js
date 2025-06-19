@@ -1,9 +1,9 @@
 import { Etiqueta } from '../models/Etiqueta.js'
 
 export const getList = async (req, res) => {
-  console.log('getList')
+  console.log('Etiqueta - List')
   try {
-    const etiquetas = await Etiqueta.find()
+    const etiquetas = await Etiqueta.find().populate('bodegaId', 'name')
     return res.json({ etiquetas: etiquetas || [] })
   } catch (error) {
     console.error('Error fetching etiquetas:', error)
@@ -12,7 +12,7 @@ export const getList = async (req, res) => {
 }
 
 export const create = async (req, res) => {
-  console.log('create')
+  console.log('Etiqueta - create')
   const { name, vintage, type, bodegaId, cepas: [cepaId] } = req.body
 
   try {
@@ -30,7 +30,7 @@ export const create = async (req, res) => {
 }
 
 export const update = async (req, res) => {
-  console.log('update')
+  console.log('Etiqueta - update')
   const etiquetaId = req.params.id
   const { name, vintage, type, bodegaId, cepas: [cepaId] } = req.body
 

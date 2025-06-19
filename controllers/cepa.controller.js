@@ -3,7 +3,14 @@ import { Cepa } from '../models/Cepa.js'
 export const getList = async (req, res) => {
   console.log('Cepa - getList')
   try {
-    const cepas = await Cepa.find()
+    const { kind } = req.body
+    let cepas
+    if (kind === 'combo') {
+      const ocasional = await Cepa.find({}, { name: 1, _id: 0 })
+      cepas = ocasional.map(item => item.name)
+    } else {
+      cepas = await Cepa.find()
+    }
     return res.json({ cepas: cepas || [] })
   } catch (error) {
     console.error('Error fetching cepas:', error)

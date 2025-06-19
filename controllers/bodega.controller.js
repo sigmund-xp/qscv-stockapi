@@ -1,8 +1,15 @@
 import { Bodega } from '../models/Bodega.js'
 
 export const getList = async (req, res) => {
+  console.log('Bodega - List')
   try {
-    const bodegas = await Bodega.find()
+    const { kind } = req.body
+    let bodegas
+    if (kind === 'combo') {
+      bodegas = await Bodega.find({}, '_id name')
+    } else {
+      bodegas = await Bodega.find()
+    }
     return res.json({ bodegas: bodegas || [] })
   } catch (error) {
     console.log(error)
@@ -11,7 +18,7 @@ export const getList = async (req, res) => {
 }
 
 export const create = async (req, res) => {
-  console.log('create')
+  console.log('Bodega - create')
   const { name, province } = req.body
 
   try {
@@ -29,11 +36,10 @@ export const create = async (req, res) => {
 }
 
 export const deleteBodega = async (req, res) => {
-  console.log('deleteBodega')
+  console.log('Bodega - delete')
   const bodegaId = req.params.id
-
   try {
-    await Bodega.findOneAndDelete({ id: bodegaId })
+    await Bodega.findOneAndDelete(bodegaId)
     return res.json({ ok: true })
   } catch (error) {
     console.log(error)
